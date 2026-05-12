@@ -23,7 +23,17 @@
 │   ├── seed.ts             # 种子数据脚本
 │   └── migrations/         # 数据库迁移文件
 ├── public/                 # 静态资源
-├── scripts/                # 构建与启动脚本
+├── DEPLOYMENT.md          # 简化部署文档（三步部署）
+├── ecosystem.config.cjs   # PM2 进程管理配置
+├── scripts/
+│   ├── build.sh           # 构建脚本
+│   ├── start.sh           # 启动脚本
+│   ├── pack.sh            # 一键打包脚本（生成可部署压缩包）
+│   ├── deploy.sh          # 一键部署脚本
+│   ├── backup.sh          # 数据库备份脚本
+│   ├── dev.sh             # 开发启动脚本
+│   ├── prepare.sh         # 依赖安装脚本
+│   └── validate.sh        # 验证脚本
 ├── src/
 │   ├── app/
 │   │   ├── api/
@@ -72,3 +82,11 @@
 - 使用 Next.js Link 组件进行内部导航
 - 深色主题：根 html 标签设置 `className="dark"`
 - Prisma 客户端使用单例模式，避免热更新时重复创建连接
+
+## 部署打包
+
+- 打包命令：`bash scripts/pack.sh [版本号]`
+- 产出物：`release/data-viz-platform-{版本号}.tar.gz`
+- 包含构建产物 + 扁平化 node_modules（npm 安装，解决 pnpm 符号链接问题）+ 启动脚本
+- 服务器部署三步：上传 → 解压 → `./ctl.sh start`
+- 详见 `DEPLOYMENT.md`
