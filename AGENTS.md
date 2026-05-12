@@ -1,5 +1,9 @@
 # 项目上下文
 
+## 项目概览
+
+数据可视化平台 - 基于 Next.js 16 + Prisma ORM + Recharts 的全栈数据录入与可视化大屏展示系统。
+
 ### 版本技术栈
 
 - **Framework**: Next.js 16 (App Router)
@@ -7,59 +11,64 @@
 - **Language**: TypeScript 5
 - **UI 组件**: shadcn/ui (基于 Radix UI)
 - **Styling**: Tailwind CSS 4
+- **ORM**: Prisma 7 (SQLite via better-sqlite3 adapter)
+- **Charts**: Recharts 2.15
+- **Database**: SQLite (可切换至 MySQL/PostgreSQL)
 
 ## 目录结构
 
 ```
+├── prisma/
+│   ├── schema.prisma       # Prisma 数据模型定义
+│   ├── seed.ts             # 种子数据脚本
+│   └── migrations/         # 数据库迁移文件
 ├── public/                 # 静态资源
 ├── scripts/                # 构建与启动脚本
-│   ├── build.sh            # 构建脚本
-│   ├── dev.sh              # 开发环境启动脚本
-│   ├── prepare.sh          # 预处理脚本
-│   └── start.sh            # 生产环境启动脚本
 ├── src/
-│   ├── app/                # 页面路由与布局
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── records/
+│   │   │   │   ├── route.ts        # GET(列表) + POST(创建)
+│   │   │   │   └── [id]/route.ts   # GET(详情) + PUT(更新) + DELETE(删除)
+│   │   │   └── stats/route.ts      # 统计聚合接口
+│   │   ├── data/page.tsx           # 数据录入管理页面
+│   │   ├── dashboard/page.tsx      # 可视化大屏页面
+│   │   ├── layout.tsx              # 根布局（深色主题）
+│   │   └── page.tsx                # 首页（导航入口）
 │   ├── components/ui/      # Shadcn UI 组件库
+│   ├── generated/prisma/   # Prisma 自动生成的客户端代码
 │   ├── hooks/              # 自定义 Hooks
-│   ├── lib/                # 工具库
-│   │   └── utils.ts        # 通用工具函数 (cn)
-│   └── server.ts           # 自定义服务端入口
-├── next.config.ts          # Next.js 配置
-├── package.json            # 项目依赖管理
-└── tsconfig.json           # TypeScript 配置
+│   └── lib/
+│       ├── prisma.ts       # Prisma 客户端单例
+│       └── utils.ts        # 通用工具函数
+├── package.json
+└── tsconfig.json
 ```
-
-- 项目文件（如 app 目录、pages 目录、components 等）默认初始化到 `src/` 目录下。
 
 ## 包管理规范
 
-**仅允许使用 pnpm** 作为包管理器，**严禁使用 npm 或 yarn**。
-**常用命令**：
-- 安装依赖：`pnpm add <package>`
-- 安装开发依赖：`pnpm add -D <package>`
-- 安装所有依赖：`pnpm install`
-- 移除依赖：`pnpm remove <package>`
+**仅允许使用 pnpm** 作为包管理器。
+
+## 数据库
+
+- 开发环境使用 SQLite，通过 `@prisma/adapter-better-sqlite3` 连接
+- 生产环境可切换为 MySQL/PostgreSQL，只需修改 `prisma/schema.prisma` 中的 provider 和连接适配器
+- 种子数据：`npx tsx prisma/seed.ts`（12条预设数据记录）
+
+## API 接口
+
+| 接口 | 方法 | 说明 |
+|------|------|------|
+| `/api/records` | GET | 获取所有记录（按创建时间倒序） |
+| `/api/records` | POST | 创建新记录（需 title, value） |
+| `/api/records/[id]` | GET | 获取单条记录 |
+| `/api/records/[id]` | PUT | 更新记录 |
+| `/api/records/[id]` | DELETE | 删除记录 |
+| `/api/stats` | GET | 获取聚合统计（分类汇总、总计等） |
 
 ## 开发规范
 
-### 编码规范
-
-- 默认按 TypeScript `strict` 心智写代码；优先复用当前作用域已声明的变量、函数、类型和导入，禁止引用未声明标识符或拼错变量名。
-- 禁止隐式 `any` 和 `as any`；函数参数、返回值、解构项、事件对象、`catch` 错误在使用前应有明确类型或先完成类型收窄，并清理未使用的变量和导入。
-
-### next.config 配置规范
-
-- 配置的路径不要写死绝对路径，必须使用 path.resolve(__dirname, ...)、import.meta.dirname 或 process.cwd() 动态拼接。
-
-### Hydration 问题防范
-
-1. 严禁在 JSX 渲染逻辑中直接使用 typeof window、Date.now()、Math.random() 等动态数据。**必须使用 'use client' 并配合 useEffect + useState 确保动态内容仅在客户端挂载后渲染**；同时严禁非法 HTML 嵌套（如 <p> 嵌套 <div>）。
-2. **禁止使用 head 标签**，优先使用 metadata，详见文档：https://nextjs.org/docs/app/api-reference/functions/generate-metadata
-   1. 三方 CSS、字体等资源可在 `globals.css` 中顶部通过 `@import` 引入或使用 next/font
-   2. preload, preconnect, dns-prefetch 通过 ReactDOM 的 preload、preconnect、dns-prefetch 方法引入
-   3. json-ld 可阅读 https://nextjs.org/docs/app/guides/json-ld
-
-## UI 设计与组件规范 (UI & Styling Standards)
-
-- 模板默认预装核心组件库 `shadcn/ui`，位于`src/components/ui/`目录下
-- Next.js 项目**必须默认**采用 shadcn/ui 组件、风格和规范，**除非用户指定用其他的组件和规范。**
+- 严格 TypeScript，禁止隐式 any
+- 使用 Next.js Link 组件进行内部导航
+- 深色主题：根 html 标签设置 `className="dark"`
+- Prisma 客户端使用单例模式，避免热更新时重复创建连接
