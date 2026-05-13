@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AppLayout } from "@/components/app-layout";
 
 export const metadata: Metadata = {
   title: "概览 - 数据可视化平台",
@@ -8,167 +9,231 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="flex h-screen bg-background text-foreground font-sans">
-      {/* Sidebar */}
-      <aside className="w-56 shrink-0 bg-card border-r border-border/30 overflow-y-auto hidden md:flex flex-col">
-        <div className="p-4 border-b border-border/20">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <svg className="w-4.5 h-4.5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
+    <AppLayout pageTitle="数据概览">
+      <div className="space-y-6 max-w-7xl mx-auto">
+        {/* Hero Banner */}
+        <div className="glass-strong rounded-2xl p-8 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-violet-500/5 to-cyan-500/5" />
+          <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-indigo-400/10 to-violet-400/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-br from-cyan-400/8 to-blue-400/8 rounded-full blur-3xl" />
+          <div className="relative z-10">
+            <h1 className="text-2xl font-bold tracking-tight">
+              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                数据可视化平台
+              </span>
+            </h1>
+            <p className="text-muted-foreground mt-2 text-sm max-w-xl">
+              集数据录入、实时统计与多维度可视化于一体，为企业决策提供数据驱动的洞察支持。
+            </p>
+            <div className="flex gap-3 mt-5">
+              <Link
+                href="/data"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-medium shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                录入数据
+              </Link>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass text-sm font-medium text-foreground hover:bg-white/60 transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                可视化大屏
+              </Link>
             </div>
-            <span className="font-semibold text-base tracking-tight">DataViz</span>
           </div>
         </div>
-        <nav className="p-3 space-y-0.5 flex-1">
-          <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-primary/8 text-primary" aria-current="page">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-            概览
-          </Link>
-          <Link href="/data" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
-            数据录入
-          </Link>
-          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            可视化大屏
-          </Link>
-        </nav>
-        <div className="p-3 border-t border-border/20">
-          <div className="px-3 py-2 text-xs text-muted-foreground">DataViz Platform v1.0</div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              label: "数据总量",
+              value: "13",
+              unit: "条",
+              change: "+3 本周",
+              gradient: "from-indigo-500 to-indigo-600",
+              iconBg: "from-indigo-400/20 to-indigo-500/20",
+              icon: (
+                <svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                </svg>
+              ),
+            },
+            {
+              label: "数据总值",
+              value: "17.4万",
+              unit: "",
+              change: "+12.5%",
+              gradient: "from-violet-500 to-purple-600",
+              iconBg: "from-violet-400/20 to-purple-500/20",
+              icon: (
+                <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ),
+            },
+            {
+              label: "分类数量",
+              value: "6",
+              unit: "个",
+              change: "收入/流量/用户",
+              gradient: "from-cyan-500 to-blue-600",
+              iconBg: "from-cyan-400/20 to-blue-500/20",
+              icon: (
+                <svg className="w-5 h-5 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+              ),
+            },
+            {
+              label: "数据均值",
+              value: "1.34万",
+              unit: "",
+              change: "范围 3.2-89430",
+              gradient: "from-emerald-500 to-teal-600",
+              iconBg: "from-emerald-400/20 to-teal-500/20",
+              icon: (
+                <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              ),
+            },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="glass-strong rounded-2xl p-5 hover:shadow-float transition-all duration-300 group"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">{stat.label}</p>
+                  <div className="mt-2 flex items-baseline gap-1">
+                    <span className="text-2xl font-bold tracking-tight">{stat.value}</span>
+                    {stat.unit && <span className="text-sm text-muted-foreground">{stat.unit}</span>}
+                  </div>
+                </div>
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}>
+                  {stat.icon}
+                </div>
+              </div>
+              <p className="mt-2.5 text-[11px] text-muted-foreground/80">{stat.change}</p>
+            </div>
+          ))}
         </div>
-      </aside>
 
-      {/* Main Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="bg-card sticky top-0 z-40 h-14 flex items-center justify-between px-5 border-b border-border/30">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="md:hidden w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-              <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-            </Link>
-            <h2 className="text-sm font-medium text-muted-foreground">概览</h2>
+        {/* Category Distribution */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="glass-strong rounded-2xl p-6">
+            <h3 className="text-sm font-semibold mb-5">分类分布</h3>
+            <div className="space-y-4">
+              {[
+                { name: "流量", count: 2, pct: 100, color: "from-cyan-400 to-blue-500" },
+                { name: "收入", count: 2, pct: 100, color: "from-violet-400 to-purple-500" },
+                { name: "销售", count: 3, pct: 75, color: "from-indigo-400 to-indigo-600" },
+                { name: "用户", count: 2, pct: 50, color: "from-emerald-400 to-teal-500" },
+                { name: "运营", count: 3, pct: 37, color: "from-amber-400 to-orange-500" },
+                { name: "测试", count: 1, pct: 12, color: "from-rose-400 to-pink-500" },
+              ].map((cat) => (
+                <div key={cat.name} className="flex items-center gap-3">
+                  <span className="text-xs font-medium text-muted-foreground w-8">{cat.name}</span>
+                  <div className="flex-1 h-2.5 bg-white/40 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-700`}
+                      style={{ width: `${cat.pct}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-semibold text-foreground w-6 text-right">{cat.count}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center hover:bg-secondary transition-colors" type="button">
-              <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-            </button>
-            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">初</div>
-          </div>
-        </header>
 
-        <main className="flex-1 overflow-y-auto bg-background p-6">
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-foreground">欢迎回来，小初</h1>
-            <p className="text-sm text-muted-foreground mt-1">以下是你的数据平台概览</p>
-          </div>
-
-          {/* Stat Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: "总记录数", value: "12", change: "+3 本月新增", iconBg: "bg-primary/10", iconColor: "text-primary", changeColor: "text-chart-4" },
-              { label: "数值总和", value: "173,464", change: "+12.5% 较上月", iconBg: "bg-chart-4/10", iconColor: "text-chart-4", changeColor: "text-chart-4" },
-              { label: "平均值", value: "14,455", change: "跨所有分类", iconBg: "bg-chart-3/10", iconColor: "text-chart-3", changeColor: "text-muted-foreground" },
-              { label: "分类数", value: "5", change: "销售/用户/运营/流量/收入", iconBg: "bg-chart-5/10", iconColor: "text-chart-5", changeColor: "text-muted-foreground" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-card rounded-lg shadow-card p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</span>
-                  <div className={`w-8 h-8 rounded-lg ${stat.iconBg} flex items-center justify-center`}>
-                    <svg className={`w-4 h-4 ${stat.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+          {/* Quick Access */}
+          <div className="glass-strong rounded-2xl p-6">
+            <h3 className="text-sm font-semibold mb-5">快捷入口</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                {
+                  href: "/data",
+                  label: "数据录入",
+                  desc: "新增与管理数据",
+                  gradient: "from-indigo-500/10 to-violet-500/10",
+                  icon: (
+                    <svg className="w-6 h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
+                  ),
+                },
+                {
+                  href: "/dashboard",
+                  label: "可视化大屏",
+                  desc: "图表与数据分析",
+                  gradient: "from-cyan-500/10 to-blue-500/10",
+                  icon: (
+                    <svg className="w-6 h-6 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  ),
+                },
+                {
+                  href: "/data",
+                  label: "批量操作",
+                  desc: "导入与导出数据",
+                  gradient: "from-emerald-500/10 to-teal-500/10",
+                  icon: (
+                    <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                  ),
+                },
+                {
+                  href: "/dashboard",
+                  label: "报表中心",
+                  desc: "查看统计报表",
+                  gradient: "from-amber-500/10 to-orange-500/10",
+                  icon: (
+                    <svg className="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  ),
+                },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`glass-subtle rounded-xl p-4 hover:bg-white/50 hover:shadow-float transition-all duration-300 group border border-transparent hover:border-white/60`}
+                >
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-200`}>
+                    {item.icon}
                   </div>
-                </div>
-                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                <div className={`text-xs font-medium mt-1 ${stat.changeColor}`}>{stat.change}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Category Distribution + Recent Records */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-card rounded-lg shadow-card p-5">
-              <h2 className="text-base font-semibold text-foreground mb-4">分类分布</h2>
-              <div className="space-y-3">
-                {[
-                  { name: "流量", value: "131,580", pct: 75, color: "bg-chart-2" },
-                  { name: "销售", value: "21,172", pct: 12, color: "bg-chart-1" },
-                  { name: "收入", value: "14,590", pct: 8, color: "bg-chart-3" },
-                  { name: "用户", value: "5,998", pct: 4, color: "bg-chart-4" },
-                  { name: "运营", value: "123.5", pct: 1, color: "bg-chart-5" },
-                ].map((cat) => (
-                  <div key={cat.name}>
-                    <div className="flex items-center justify-between text-sm mb-1">
-                      <span className="font-medium text-foreground">{cat.name}</span>
-                      <span className="text-muted-foreground">{cat.value}</span>
-                    </div>
-                    <div className="h-2 bg-muted rounded-full overflow-hidden">
-                      <div className={`h-full ${cat.color} rounded-full`} style={{ width: `${cat.pct}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="lg:col-span-2 bg-card rounded-lg shadow-card p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-semibold text-foreground">最近记录</h2>
-                <Link href="/data" className="text-sm font-medium text-primary hover:underline">查看全部</Link>
-              </div>
-              <div className="divide-y divide-border/40">
-                {[
-                  { name: "页面访问量", category: "流量", value: "89,430", date: "2026-05-12", dotColor: "bg-chart-2" },
-                  { name: "独立访客", category: "流量", value: "42,150", date: "2026-05-12", dotColor: "bg-sky-500" },
-                  { name: "线上销售额", category: "销售", value: "12,580", date: "2026-05-12", dotColor: "bg-chart-1" },
-                  { name: "会员收入", category: "收入", value: "8,920", date: "2026-05-12", dotColor: "bg-chart-3" },
-                  { name: "新增用户", category: "用户", value: "3,580", date: "2026-05-12", dotColor: "bg-chart-4" },
-                ].map((rec) => (
-                  <div key={rec.name} className="flex items-center justify-between py-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${rec.dotColor}`} />
-                      <div>
-                        <span className="text-sm font-medium text-foreground">{rec.name}</span>
-                        <span className="text-xs text-muted-foreground ml-2">{rec.category}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-semibold text-foreground">{rec.value}</div>
-                      <div className="text-xs text-muted-foreground">{rec.date}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  <p className="text-sm font-medium">{item.label}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{item.desc}</p>
+                </Link>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Quick Actions */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link href="/data" className="group bg-card rounded-lg shadow-card p-5 hover:shadow-float transition-shadow border border-transparent hover:border-primary/20">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">数据录入</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">添加、编辑、删除数据记录</p>
-                </div>
-              </div>
-            </Link>
-            <Link href="/dashboard" className="group bg-card rounded-lg shadow-card p-5 hover:shadow-float transition-shadow border border-transparent hover:border-primary/20">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">可视化大屏</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">查看数据图表与趋势分析</p>
-                </div>
-              </div>
-            </Link>
+        {/* Tech Stack */}
+        <div className="glass rounded-2xl p-5">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {["Next.js 16", "React 19", "TypeScript 5", "Prisma 7", "Recharts", "Tailwind CSS 4", "shadcn/ui"].map(
+              (tech) => (
+                <span
+                  key={tech}
+                  className="px-3 py-1.5 rounded-lg glass-subtle text-[11px] font-medium text-muted-foreground"
+                >
+                  {tech}
+                </span>
+              )
+            )}
           </div>
-        </main>
+        </div>
       </div>
-    </div>
+    </AppLayout>
   );
 }

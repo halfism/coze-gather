@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { AppLayout } from "@/components/app-layout";
 
 interface DataRecord {
   id: string;
@@ -41,13 +41,14 @@ interface DataRecord {
   updatedAt: string;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  "销售": "bg-indigo-50 text-indigo-700 border-indigo-200",
-  "用户": "bg-violet-50 text-violet-700 border-violet-200",
-  "运营": "bg-emerald-50 text-emerald-700 border-emerald-200",
-  "流量": "bg-sky-50 text-sky-700 border-sky-200",
-  "收入": "bg-amber-50 text-amber-700 border-amber-200",
-  "默认": "bg-slate-50 text-slate-700 border-slate-200",
+const CATEGORY_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
+  "销售": { bg: "bg-indigo-50/80", text: "text-indigo-600", dot: "bg-indigo-400" },
+  "用户": { bg: "bg-violet-50/80", text: "text-violet-600", dot: "bg-violet-400" },
+  "运营": { bg: "bg-emerald-50/80", text: "text-emerald-600", dot: "bg-emerald-400" },
+  "流量": { bg: "bg-sky-50/80", text: "text-sky-600", dot: "bg-sky-400" },
+  "收入": { bg: "bg-amber-50/80", text: "text-amber-600", dot: "bg-amber-400" },
+  "测试": { bg: "bg-rose-50/80", text: "text-rose-600", dot: "bg-rose-400" },
+  "默认": { bg: "bg-slate-50/80", text: "text-slate-600", dot: "bg-slate-400" },
 };
 
 const COLOR_OPTIONS = [
@@ -160,207 +161,190 @@ export default function DataPage() {
   };
 
   return (
-    <div className="flex h-screen bg-background text-foreground font-sans">
-      {/* Sidebar */}
-      <aside className="w-56 shrink-0 bg-card border-r border-border/30 overflow-y-auto hidden md:flex flex-col">
-        <div className="p-4 border-b border-border/20">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <svg className="w-4.5 h-4.5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <span className="font-semibold text-base tracking-tight">DataViz</span>
+    <AppLayout pageTitle="数据录入">
+      <div className="space-y-6 max-w-7xl mx-auto">
+        {/* Page Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold">数据录入管理</h1>
+            <p className="text-sm text-muted-foreground mt-1">增删改查数据记录，变更后实时同步至大屏</p>
           </div>
-        </div>
-        <nav className="p-3 space-y-0.5 flex-1">
-          <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-            概览
-          </Link>
-          <Link href="/data" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-primary/8 text-primary" aria-current="page">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
-            数据录入
-          </Link>
-          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            可视化大屏
-          </Link>
-        </nav>
-        <div className="p-3 border-t border-border/20">
-          <div className="px-3 py-2 text-xs text-muted-foreground">DataViz Platform v1.0</div>
-        </div>
-      </aside>
-
-      {/* Main Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="bg-card sticky top-0 z-40 h-14 flex items-center justify-between px-5 border-b border-border/30">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="md:hidden w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-              <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-            </Link>
-            <h2 className="text-sm font-medium text-muted-foreground">数据录入</h2>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard">
-              <Button variant="outline" size="sm" className="text-muted-foreground">
-                查看大屏
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                onClick={openCreate}
+                className="bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200 rounded-xl"
+              >
+                <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                新增数据
               </Button>
-            </Link>
-            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">初</div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto bg-background p-6">
-          {/* Page Title + Action */}
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">数据录入管理</h1>
-              <p className="text-sm text-muted-foreground mt-1">增删改查数据记录，变更后实时同步至大屏</p>
-            </div>
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={openCreate} className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  + 新增数据
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>{editId ? "编辑数据" : "新增数据"}</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 mt-4">
-                  <div className="space-y-2">
-                    <Label>标题 *</Label>
-                    <Input
-                      value={form.title}
-                      onChange={(e) => setForm({ ...form, title: e.target.value })}
-                      placeholder="输入数据标题"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>数值 *</Label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      value={form.value}
-                      onChange={(e) => setForm({ ...form, value: e.target.value })}
-                      placeholder="输入数值"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>描述</Label>
-                    <Textarea
-                      value={form.description}
-                      onChange={(e) => setForm({ ...form, description: e.target.value })}
-                      placeholder="输入数据描述"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>分类</Label>
-                      <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          {["销售", "用户", "运营", "流量", "收入", "默认"].map((c) => (
-                            <SelectItem key={c} value={c}>{c}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>颜色</Label>
-                      <Select value={form.color} onValueChange={(v) => setForm({ ...form, color: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          {COLOR_OPTIONS.map((c) => (
-                            <SelectItem key={c.value} value={c.value}>
-                              <span className="flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: c.value }} />
-                                {c.label}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  <Button onClick={handleSubmit} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                    {editId ? "保存修改" : "创建记录"}
-                  </Button>
+            </DialogTrigger>
+            <DialogContent className="glass-strong border-white/40 rounded-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-lg font-semibold">{editId ? "编辑数据" : "新增数据"}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4 mt-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">标题 *</Label>
+                  <Input
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                    placeholder="输入数据标题"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
+                  />
                 </div>
-              </DialogContent>
-            </Dialog>
-          </div>
-
-          {/* Stats Summary */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            {[
-              { label: "总记录数", value: String(records.length) },
-              { label: "分类数", value: String(new Set(records.map((r) => r.category)).size) },
-              { label: "数值总和", value: records.reduce((sum, r) => sum + r.value, 0).toLocaleString() },
-              { label: "平均值", value: records.length > 0 ? (records.reduce((sum, r) => sum + r.value, 0) / records.length).toFixed(1) : "0" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-card rounded-lg shadow-card p-4">
-                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</div>
-                <div className="text-xl font-bold text-foreground mt-1">{stat.value}</div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">数值 *</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={form.value}
+                    onChange={(e) => setForm({ ...form, value: e.target.value })}
+                    placeholder="输入数值"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">描述</Label>
+                  <Textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    placeholder="输入数据描述"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">分类</Label>
+                    <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                      <SelectTrigger className="rounded-xl border-white/30 bg-white/40"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {["销售", "用户", "运营", "流量", "收入", "默认"].map((c) => (
+                          <SelectItem key={c} value={c}>{c}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">颜色</Label>
+                    <Select value={form.color} onValueChange={(v) => setForm({ ...form, color: v })}>
+                      <SelectTrigger className="rounded-xl border-white/30 bg-white/40"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {COLOR_OPTIONS.map((c) => (
+                          <SelectItem key={c.value} value={c.value}>
+                            <span className="flex items-center gap-2">
+                              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: c.value }} />
+                              {c.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <Button
+                  onClick={handleSubmit}
+                  className="w-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white rounded-xl shadow-glow hover:shadow-lg transition-all duration-200"
+                >
+                  {editId ? "保存修改" : "创建记录"}
+                </Button>
               </div>
-            ))}
-          </div>
+            </DialogContent>
+          </Dialog>
+        </div>
 
-          {/* Filter */}
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs text-muted-foreground font-medium">筛选:</span>
-            {categories.map((cat) => (
+        {/* Stats Summary */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: "总记录数", value: String(records.length), icon: "📋", gradient: "from-indigo-400/15 to-indigo-500/10" },
+            { label: "分类数", value: String(new Set(records.map((r) => r.category)).size), icon: "🏷️", gradient: "from-violet-400/15 to-purple-500/10" },
+            { label: "数值总和", value: records.reduce((sum, r) => sum + r.value, 0).toLocaleString(), icon: "📊", gradient: "from-cyan-400/15 to-blue-500/10" },
+            { label: "平均值", value: records.length > 0 ? (records.reduce((sum, r) => sum + r.value, 0) / records.length).toFixed(1) : "0", icon: "📈", gradient: "from-emerald-400/15 to-teal-500/10" },
+          ].map((stat) => (
+            <div key={stat.label} className="glass-strong rounded-2xl p-5 hover:shadow-float transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</p>
+                  <p className="text-2xl font-bold mt-1.5 tracking-tight">{stat.value}</p>
+                </div>
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-lg`}>
+                  {stat.icon}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Filter */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground font-medium mr-1">筛选:</span>
+          {categories.map((cat) => {
+            const style = cat !== "全部" ? CATEGORY_STYLES[cat] : null;
+            return (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
                   filterCategory === cat
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-glow"
+                    : "glass-subtle text-muted-foreground hover:bg-white/50 hover:text-foreground"
                 }`}
               >
-                {cat}
+                <span className="flex items-center gap-1.5">
+                  {style && <span className={`w-2 h-2 rounded-full ${style.dot}`} />}
+                  {cat}
+                </span>
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Data Table */}
-          {loading ? (
-            <div className="text-center py-20 text-muted-foreground">加载中...</div>
-          ) : filteredRecords.length === 0 ? (
-            <div className="text-center py-20 text-muted-foreground">
-              暂无数据记录，点击 &ldquo;新增数据&rdquo; 创建第一条记录
+        {/* Data Table */}
+        {loading ? (
+          <div className="glass-strong rounded-2xl p-20 text-center text-muted-foreground">
+            <div className="animate-pulse">加载中...</div>
+          </div>
+        ) : filteredRecords.length === 0 ? (
+          <div className="glass-strong rounded-2xl p-20 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+              </svg>
             </div>
-          ) : (
-            <div className="bg-card rounded-lg shadow-card border border-border/30 overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent">
-                    <TableHead className="text-muted-foreground">标题</TableHead>
-                    <TableHead className="text-muted-foreground">数值</TableHead>
-                    <TableHead className="text-muted-foreground">描述</TableHead>
-                    <TableHead className="text-muted-foreground">分类</TableHead>
-                    <TableHead className="text-muted-foreground">颜色</TableHead>
-                    <TableHead className="text-muted-foreground text-right">操作</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredRecords.map((record) => (
-                    <TableRow key={record.id}>
+            <p className="text-muted-foreground">暂无数据记录</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">点击 &ldquo;新增数据&rdquo; 创建第一条记录</p>
+          </div>
+        ) : (
+          <div className="glass-strong rounded-2xl overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/30">
+                  <TableHead className="text-muted-foreground text-xs font-semibold">标题</TableHead>
+                  <TableHead className="text-muted-foreground text-xs font-semibold">数值</TableHead>
+                  <TableHead className="text-muted-foreground text-xs font-semibold">描述</TableHead>
+                  <TableHead className="text-muted-foreground text-xs font-semibold">分类</TableHead>
+                  <TableHead className="text-muted-foreground text-xs font-semibold">颜色</TableHead>
+                  <TableHead className="text-muted-foreground text-xs font-semibold text-right">操作</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredRecords.map((record) => {
+                  const style = CATEGORY_STYLES[record.category] || CATEGORY_STYLES["默认"];
+                  return (
+                    <TableRow key={record.id} className="border-border/20 hover:bg-white/30 transition-colors">
                       <TableCell className="font-medium text-foreground">{record.title}</TableCell>
-                      <TableCell className="font-mono text-primary">{record.value.toLocaleString()}</TableCell>
+                      <TableCell className="font-mono font-semibold text-indigo-600">{record.value.toLocaleString()}</TableCell>
                       <TableCell className="text-muted-foreground max-w-[200px] truncate">{record.description}</TableCell>
                       <TableCell>
-                        <Badge
-                          variant="outline"
-                          className={CATEGORY_COLORS[record.category] || CATEGORY_COLORS["默认"]}
-                        >
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium ${style.bg} ${style.text}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
                           {record.category}
-                        </Badge>
+                        </span>
                       </TableCell>
                       <TableCell>
-                        <span className="inline-block w-4 h-4 rounded-full border border-border/50" style={{ backgroundColor: record.color }} />
+                        <span className="inline-block w-5 h-5 rounded-lg border border-white/50 shadow-sm" style={{ backgroundColor: record.color }} />
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end gap-1">
@@ -368,7 +352,7 @@ export default function DataPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEdit(record)}
-                            className="text-muted-foreground hover:text-primary"
+                            className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-50/50 rounded-lg"
                           >
                             编辑
                           </Button>
@@ -376,20 +360,20 @@ export default function DataPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(record.id)}
-                            className="text-muted-foreground hover:text-red-600"
+                            className="text-muted-foreground hover:text-red-600 hover:bg-red-50/50 rounded-lg"
                           >
                             删除
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </main>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
-    </div>
+    </AppLayout>
   );
 }
