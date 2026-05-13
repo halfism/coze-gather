@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/google-all-fonts.css" rel="stylesheet"/>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary:              #4F46E5;
+      --color-primary-container:    #E0E7FF;
+      --color-on-primary:           #ffffff;
+      --color-background:                 #F8F9FC;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #F1F3F9;
+      --color-surface-container-high:     #E8EBF2;
+      --color-surface-container-highest:  #DEE2EC;
+      --color-on-surface:           #1E1F25;
+      --color-on-surface-variant:   #6B7084;
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      --color-outline:          #D1D5E4;
+      --color-outline-variant:  #E2E5EF;
+      --radius-sm:   0.375rem;
+      --radius-md:   0.5rem;
+      --radius-lg:   0.75rem;
+      --radius-xl:   1rem;
+      --radius-2xl:  1.5rem;
+      --radius-full: 9999px;
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.12);
+      --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-5 border-b border-outline-variant/30">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="chart-bar" class="w-4.5 h-4.5 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base tracking-tight">DataViz Platform</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors">
+        <i data-lucide="bell" class="w-4 h-4 text-on-surface-variant"></i>
+      </button>
+      <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">初</div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline-variant/30 overflow-y-auto">
+      <div class="p-3 space-y-0.5">
+        <a href="home.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>概览
+        </a>
+        <a href="data.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-primary/8 text-primary transition-colors" aria-current="page">
+          <i data-lucide="database" class="w-4 h-4"></i>数据录入
+        </a>
+        <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors">
+          <i data-lucide="monitor" class="w-4 h-4"></i>可视化大屏
+        </a>
+      </div>
+      <div class="mt-6 mx-3 pt-4 border-t border-outline-variant/20">
+        <p class="px-3 text-xs font-medium text-on-surface-variant/60 uppercase tracking-wider mb-2">系统</p>
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors">
+          <i data-lucide="settings" class="w-4 h-4"></i>设置
+        </a>
+      </div>
+    </aside>
+
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+      <!-- 页头 -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-on-surface">数据录入</h1>
+          <p class="text-sm text-on-surface-variant mt-1">管理平台数据记录</p>
+        </div>
+        <button id="btn-new" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>新建记录
+        </button>
+      </div>
+
+      <!-- 统计卡片 -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="bg-surface rounded-lg shadow-card p-4 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <i data-lucide="hash" class="w-5 h-5 text-primary"></i>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant font-medium">总记录</div>
+            <div class="text-xl font-bold text-on-surface">12</div>
+          </div>
+        </div>
+        <div class="bg-surface rounded-lg shadow-card p-4 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
+            <i data-lucide="trending-up" class="w-5 h-5 text-success"></i>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant font-medium">数值总和</div>
+            <div class="text-xl font-bold text-on-surface">173,464</div>
+          </div>
+        </div>
+        <div class="bg-surface rounded-lg shadow-card p-4 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center">
+            <i data-lucide="divide" class="w-5 h-5 text-warning"></i>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant font-medium">平均值</div>
+            <div class="text-xl font-bold text-on-surface">14,455</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 搜索与筛选 -->
+      <div class="flex items-center gap-3 mb-4">
+        <div class="relative flex-1 max-w-sm">
+          <i data-lucide="search" class="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input id="search-input" class="w-full bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors" placeholder="搜索记录..." />
+        </div>
+        <select id="filter-category" class="bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors">
+          <option value="">全部分类</option>
+          <option value="销售">销售</option>
+          <option value="用户">用户</option>
+          <option value="运营">运营</option>
+          <option value="流量">流量</option>
+          <option value="收入">收入</option>
+        </select>
+      </div>
+
+      <!-- 数据表格 -->
+      <div class="bg-surface rounded-lg shadow-card overflow-hidden">
+        <div class="grid grid-cols-6 px-5 py-3 bg-surface-container text-xs font-semibold text-on-surface-variant uppercase tracking-wide">
+          <span>标题</span><span>分类</span><span>数值</span><span>描述</span><span>创建时间</span><span>操作</span>
+        </div>
+        <div id="records-body" class="divide-y divide-outline-variant/30">
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="流量">
+            <span class="text-sm font-medium text-on-surface">页面访问量</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-blue-500/15 text-blue-600 w-fit">流量</span>
+            <span class="text-sm font-semibold text-on-surface">89,430</span>
+            <span class="text-sm text-on-surface-variant truncate">本月累计PV</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="流量">
+            <span class="text-sm font-medium text-on-surface">独立访客</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-sky-500/15 text-sky-600 w-fit">流量</span>
+            <span class="text-sm font-semibold text-on-surface">42,150</span>
+            <span class="text-sm text-on-surface-variant truncate">本月累计UV</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="销售">
+            <span class="text-sm font-medium text-on-surface">线上销售额</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/15 text-primary w-fit">销售</span>
+            <span class="text-sm font-semibold text-on-surface">12,580</span>
+            <span class="text-sm text-on-surface-variant truncate">本月线上渠道销售额（万元）</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="收入">
+            <span class="text-sm font-medium text-on-surface">会员收入</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-orange-500/15 text-orange-600 w-fit">收入</span>
+            <span class="text-sm font-semibold text-on-surface">8,920</span>
+            <span class="text-sm text-on-surface-variant truncate">本月会员订阅收入（万元）</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="用户">
+            <span class="text-sm font-medium text-on-surface">新增用户</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-emerald-500/15 text-emerald-600 w-fit">用户</span>
+            <span class="text-sm font-semibold text-on-surface">3,580</span>
+            <span class="text-sm text-on-surface-variant truncate">本月新增注册用户数</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+          <div class="record-row grid grid-cols-6 px-5 py-3.5 hover:bg-surface-container/50 transition-colors items-center" data-category="运营">
+            <span class="text-sm font-medium text-on-surface">转化率</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-rose-500/15 text-rose-600 w-fit">运营</span>
+            <span class="text-sm font-semibold text-on-surface">3.2</span>
+            <span class="text-sm text-on-surface-variant truncate">访问到付费的转化比率（%）</span>
+            <span class="text-sm text-on-surface-variant">2026-05-12</span>
+            <div class="flex gap-2">
+              <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+              <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 新建/编辑模态框 -->
+  <div id="modal" class="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-surface rounded-xl shadow-dialog max-w-md w-full p-6">
+      <h2 id="modal-title" class="text-lg font-semibold text-on-surface mb-5">新建记录</h2>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-on-surface mb-1.5">标题</label>
+          <input id="field-title" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="输入数据标题" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-on-surface mb-1.5">数值</label>
+            <input id="field-value" type="number" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="0" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-on-surface mb-1.5">分类</label>
+            <select id="field-category" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30">
+              <option value="销售">销售</option>
+              <option value="用户">用户</option>
+              <option value="运营">运营</option>
+              <option value="流量">流量</option>
+              <option value="收入">收入</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-on-surface mb-1.5">描述</label>
+          <textarea id="field-desc" rows="2" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none" placeholder="简要描述（可选）"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-on-surface mb-1.5">颜色</label>
+          <div class="flex gap-2">
+            <button class="color-btn w-7 h-7 rounded-full bg-blue-500 ring-2 ring-blue-500/30" data-color="#3b82f6"></button>
+            <button class="color-btn w-7 h-7 rounded-full bg-primary ring-2 ring-primary/30 ring-transparent" data-color="#4F46E5"></button>
+            <button class="color-btn w-7 h-7 rounded-full bg-orange-500 ring-2 ring-orange-500/30 ring-transparent" data-color="#f97316"></button>
+            <button class="color-btn w-7 h-7 rounded-full bg-emerald-500 ring-2 ring-emerald-500/30 ring-transparent" data-color="#10b981"></button>
+            <button class="color-btn w-7 h-7 rounded-full bg-rose-500 ring-2 ring-rose-500/30 ring-transparent" data-color="#f43f5e"></button>
+            <button class="color-btn w-7 h-7 rounded-full bg-sky-500 ring-2 ring-sky-500/30 ring-transparent" data-color="#0ea5e9"></button>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end gap-3 mt-6">
+        <button id="btn-cancel" class="bg-surface-container text-on-surface px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all">取消</button>
+        <button id="btn-save" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // 新建按钮
+      $('#btn-new').on('click', function() {
+        $('#modal-title').text('新建记录');
+        $('#modal').removeClass('hidden');
+      });
+
+      // 取消
+      $('#btn-cancel').on('click', function() {
+        $('#modal').addClass('hidden');
+      });
+
+      // 颜色选择
+      $('.color-btn').on('click', function() {
+        $('.color-btn').removeClass('ring-primary/30').addClass('ring-transparent');
+        $(this).removeClass('ring-transparent');
+      });
+
+      // 筛选
+      $('#filter-category').on('change', function() {
+        const val = $(this).val();
+        if (val) {
+          $('.record-row').hide().filter('[data-category="' + val + '"]').show();
+        } else {
+          $('.record-row').show();
+        }
+      });
+
+      // 搜索
+      $('#search-input').on('input', function() {
+        const q = $(this).val().toLowerCase();
+        $('.record-row').each(function() {
+          const text = $(this).text().toLowerCase();
+          $(this).toggle(text.includes(q));
+        });
+      });
+
+      // 删除
+      $('#records-body').on('click', '.btn-delete', function() {
+        $(this).closest('.record-row').fadeOut(200, function() { $(this).remove(); });
+      });
+
+      // 编辑
+      $('#records-body').on('click', '.btn-edit', function() {
+        // 编辑按钮 - 点击后应实现：
+        // 1. 读取当前行的标题、数值、分类、描述填入表单
+        // 2. 切换模态框标题为"编辑记录"
+        // 3. 保存时更新对应行的数据
+        console.log('编辑记录:', $(this).closest('.record-row').data('category'));
+        $('#modal-title').text('编辑记录');
+        $('#modal').removeClass('hidden');
+      });
+
+      // 保存
+      $('#btn-save').on('click', function() {
+        // 保存按钮 - 应实现：
+        // 1. 校验标题和数值不为空
+        // 2. 调用 POST /api/records 或 PUT /api/records/:id
+        // 3. 成功后关闭模态框并刷新列表
+        $('#modal').addClass('hidden');
+      });
+    });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

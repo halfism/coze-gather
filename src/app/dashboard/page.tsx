@@ -23,7 +23,6 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
@@ -63,6 +62,17 @@ const CHART_COLORS = [
 
 const PIE_COLORS = ["#6366f1", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ec4899"];
 
+const TOOLTIP_STYLE = {
+  backgroundColor: "#fff",
+  border: "1px solid #e2e8f0",
+  borderRadius: "8px",
+  color: "#1e293b",
+  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+};
+
+const GRID_STROKE = "#e2e8f0";
+const TICK_STYLE = { fill: "#64748b", fontSize: 11 };
+
 export default function DashboardPage() {
   const [records, setRecords] = useState<DataRecord[]>([]);
   const [stats, setStats] = useState<StatsData | null>(null);
@@ -90,11 +100,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 30000); // Auto refresh every 30s
+    const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
   }, [fetchData]);
 
-  // Clock
   useEffect(() => {
     const updateTime = () => {
       setCurrentTime(new Date().toLocaleString("zh-CN", {
@@ -112,7 +121,6 @@ export default function DashboardPage() {
     ? records
     : records.filter((r) => r.category === filterCategory);
 
-  // Chart data
   const barChartData = filteredRecords.map((r) => ({
     name: r.title,
     value: r.value,
@@ -146,115 +154,130 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 flex items-center justify-center">
-        <div className="text-slate-400 text-lg">加载可视化数据中...</div>
+      <div className="flex h-screen bg-background items-center justify-center">
+        <div className="text-muted-foreground text-lg">加载可视化数据中...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950">
-      {/* Background decoration */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/3 w-[500px] h-[500px] bg-violet-500/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative z-10 p-4 md:p-6 max-w-[1600px] mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <div className="flex items-center gap-4">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-indigo-200 to-cyan-200 bg-clip-text text-transparent">
-                数据可视化大屏
-              </h1>
-              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30">
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5 animate-pulse" />
-                实时
-              </Badge>
+    <div className="flex h-screen bg-background text-foreground font-sans">
+      {/* Sidebar */}
+      <aside className="w-56 shrink-0 bg-card border-r border-border/30 overflow-y-auto hidden md:flex flex-col">
+        <div className="p-4 border-b border-border/20">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <svg className="w-4.5 h-4.5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
             </div>
-            <p className="text-slate-500 text-sm mt-1">
-              数据每30秒自动刷新 | 共 {records.length} 条记录
-            </p>
+            <span className="font-semibold text-base tracking-tight">DataViz</span>
+          </div>
+        </div>
+        <nav className="p-3 space-y-0.5 flex-1">
+          <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+            概览
+          </Link>
+          <Link href="/data" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
+            数据录入
+          </Link>
+          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-primary/8 text-primary" aria-current="page">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            可视化大屏
+          </Link>
+        </nav>
+        <div className="p-3 border-t border-border/20">
+          <div className="px-3 py-2 text-xs text-muted-foreground">DataViz Platform v1.0</div>
+        </div>
+      </aside>
+
+      {/* Main Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="bg-card sticky top-0 z-40 h-14 flex items-center justify-between px-5 border-b border-border/30">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="md:hidden w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+              <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </Link>
+            <h2 className="text-sm font-medium text-muted-foreground">可视化大屏</h2>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-slate-400 font-mono text-sm">{currentTime}</span>
+            <span className="text-muted-foreground font-mono text-sm hidden sm:block">{currentTime}</span>
             <Link href="/data">
-              <button className="px-4 py-2 text-sm bg-slate-800/60 border border-slate-700/50 rounded-lg text-slate-300 hover:bg-slate-700/60 hover:text-indigo-300 transition-all">
+              <button className="px-3 py-1.5 text-sm bg-muted text-muted-foreground rounded-lg hover:bg-secondary hover:text-foreground transition-colors" type="button">
                 数据管理
               </button>
             </Link>
-            <Link href="/">
-              <button className="px-4 py-2 text-sm bg-slate-800/60 border border-slate-700/50 rounded-lg text-slate-300 hover:bg-slate-700/60 transition-all">
-                首页
-              </button>
-            </Link>
+            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">初</div>
           </div>
-        </div>
+        </header>
 
-        {/* Category Filter */}
-        <div className="flex items-center gap-2 mb-6">
-          <span className="text-xs text-slate-500">筛选:</span>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilterCategory(cat)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                filterCategory === cat
-                  ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
-                  : "bg-slate-800/40 text-slate-500 border border-slate-700/40 hover:border-slate-600 hover:text-slate-300"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <main className="flex-1 overflow-y-auto bg-background p-6">
+          {/* Page Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl font-bold text-foreground">数据可视化大屏</h1>
+                <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse" />
+                  实时
+                </Badge>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">数据每30秒自动刷新 | 共 {records.length} 条记录</p>
+            </div>
+          </div>
 
-        {/* KPI Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          {[
-            { label: "数据总量", value: stats?.total ?? 0, suffix: "条", gradient: "from-indigo-500 to-violet-500" },
-            { label: "数值总和", value: (stats?.sumValue ?? 0).toLocaleString(), suffix: "", gradient: "from-cyan-500 to-blue-500" },
-            { label: "平均数值", value: (stats?.avgValue ?? 0).toFixed(1), suffix: "", gradient: "from-emerald-500 to-teal-500" },
-            { label: "最大数值", value: (stats?.maxValue ?? 0).toLocaleString(), suffix: "", gradient: "from-amber-500 to-orange-500" },
-          ].map((kpi) => (
-            <Card key={kpi.label} className="bg-slate-900/60 border-slate-700/50 overflow-hidden">
-              <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${kpi.gradient}`} />
-              <CardContent className="p-4">
-                <div className="text-xs text-slate-400 mb-1">{kpi.label}</div>
-                <div className="text-2xl font-bold text-white">
+          {/* Category Filter */}
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xs text-muted-foreground font-medium">筛选:</span>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilterCategory(cat)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                  filterCategory === cat
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-secondary hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* KPI Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            {[
+              { label: "数据总量", value: stats?.total ?? 0, suffix: "条", accent: "border-t-primary" },
+              { label: "数值总和", value: (stats?.sumValue ?? 0).toLocaleString(), suffix: "", accent: "border-t-chart-1" },
+              { label: "平均数值", value: (stats?.avgValue ?? 0).toFixed(1), suffix: "", accent: "border-t-chart-3" },
+              { label: "最大数值", value: (stats?.maxValue ?? 0).toLocaleString(), suffix: "", accent: "border-t-chart-4" },
+            ].map((kpi) => (
+              <div key={kpi.label} className={`bg-card rounded-lg shadow-card p-4 border-t-2 ${kpi.accent}`}>
+                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{kpi.label}</div>
+                <div className="text-2xl font-bold text-foreground mt-1">
                   {kpi.value}
-                  <span className="text-sm text-slate-400 ml-1">{kpi.suffix}</span>
+                  <span className="text-sm text-muted-foreground ml-1 font-normal">{kpi.suffix}</span>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
 
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Bar Chart */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-indigo-400 rounded-full" />
-                柱状图 - 数值对比
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+          {/* Charts Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Bar Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-primary rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">柱状图 - 数值对比</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={barChartData} margin={{ top: 5, right: 20, left: 10, bottom: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                  <XAxis dataKey="name" tick={{ fill: "#94a3b8", fontSize: 11 }} angle={-30} textAnchor="end" />
-                  <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} />
+                  <XAxis dataKey="name" tick={TICK_STYLE} angle={-30} textAnchor="end" />
+                  <YAxis tick={TICK_STYLE} />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} />
                   <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                     {barChartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -262,18 +285,14 @@ export default function DashboardPage() {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Pie Chart */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-cyan-400 rounded-full" />
-                饼图 - 分类占比
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            {/* Pie Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-chart-1 rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">饼图 - 分类占比</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -284,48 +303,30 @@ export default function DashboardPage() {
                     innerRadius={50}
                     paddingAngle={3}
                     dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }: { name: string; percent: number }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
                     {categorySumData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.fill} />
                     ))}
                   </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                  />
-                  <Legend wrapperStyle={{ color: "#94a3b8" }} />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} />
+                  <Legend wrapperStyle={{ color: "#64748b" }} />
                 </PieChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Line Chart */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full" />
-                折线图 - 数据趋势
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            {/* Line Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-chart-3 rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">折线图 - 数据趋势</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={lineChartData} margin={{ top: 5, right: 20, left: 10, bottom: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                  <XAxis dataKey="name" tick={{ fill: "#94a3b8", fontSize: 11 }} angle={-30} textAnchor="end" />
-                  <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} />
+                  <XAxis dataKey="name" tick={TICK_STYLE} angle={-30} textAnchor="end" />
+                  <YAxis tick={TICK_STYLE} />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} />
                   <Line
                     type="monotone"
                     dataKey="value"
@@ -336,38 +337,29 @@ export default function DashboardPage() {
                   />
                 </LineChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Area Chart */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-violet-400 rounded-full" />
-                面积图 - 数值分布
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            {/* Area Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-chart-2 rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">面积图 - 数值分布</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={areaData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
                   <defs>
-                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
+                    <linearGradient id="colorValueLight" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
                       <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                  <XAxis dataKey="index" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                  <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} />
+                  <XAxis dataKey="index" tick={TICK_STYLE} />
+                  <YAxis tick={TICK_STYLE} />
                   <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                    labelFormatter={(label) => {
-                      const item = areaData.find((d) => d.index === Number(label));
+                    contentStyle={TOOLTIP_STYLE}
+                    labelFormatter={(label: number) => {
+                      const item = areaData.find((d) => d.index === label);
                       return item?.name || String(label);
                     }}
                   />
@@ -377,57 +369,42 @@ export default function DashboardPage() {
                     stroke="#8b5cf6"
                     strokeWidth={2}
                     fillOpacity={1}
-                    fill="url(#colorValue)"
+                    fill="url(#colorValueLight)"
                   />
                 </AreaChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Radar Chart */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-amber-400 rounded-full" />
-                雷达图 - 分类均值
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            {/* Radar Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-chart-4 rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">雷达图 - 分类均值</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                  <PolarGrid stroke="#334155" />
-                  <PolarAngleAxis dataKey="category" tick={{ fill: "#94a3b8", fontSize: 12 }} />
-                  <PolarRadiusAxis tick={{ fill: "#64748b", fontSize: 10 }} />
+                  <PolarGrid stroke={GRID_STROKE} />
+                  <PolarAngleAxis dataKey="category" tick={{ fill: "#64748b", fontSize: 12 }} />
+                  <PolarRadiusAxis tick={{ fill: "#94a3b8", fontSize: 10 }} />
                   <Radar
                     name="平均值"
                     dataKey="value"
                     stroke="#f59e0b"
                     fill="#f59e0b"
-                    fillOpacity={0.2}
+                    fillOpacity={0.15}
                     strokeWidth={2}
                   />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                  />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} />
                 </RadarChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Horizontal Bar Chart - Category Count */}
-          <Card className="bg-slate-900/60 border-slate-700/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <span className="w-2 h-2 bg-pink-400 rounded-full" />
-                条形图 - 分类统计
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            {/* Horizontal Bar Chart */}
+            <div className="bg-card rounded-lg shadow-card p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 bg-chart-5 rounded-full" />
+                <h3 className="text-base font-semibold text-foreground">条形图 - 分类统计</h3>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                   data={stats?.categoryStats.map((cs, i) => ({
@@ -439,18 +416,11 @@ export default function DashboardPage() {
                   layout="vertical"
                   margin={{ top: 5, right: 20, left: 40, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                  <XAxis type="number" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                  <YAxis type="category" dataKey="name" tick={{ fill: "#94a3b8", fontSize: 12 }} width={40} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                      color: "#e2e8f0",
-                    }}
-                  />
-                  <Legend wrapperStyle={{ color: "#94a3b8" }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} />
+                  <XAxis type="number" tick={TICK_STYLE} />
+                  <YAxis type="category" dataKey="name" tick={{ fill: "#64748b", fontSize: 12 }} width={40} />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} />
+                  <Legend wrapperStyle={{ color: "#64748b" }} />
                   <Bar dataKey="count" name="记录数" radius={[0, 4, 4, 0]}>
                     {(stats?.categoryStats ?? []).map((_entry, index) => (
                       <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
@@ -458,14 +428,14 @@ export default function DashboardPage() {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </div>
 
-        {/* Footer */}
-        <div className="mt-8 text-center text-xs text-slate-600">
-          数据可视化平台 | Next.js 16 + Prisma 7 + Recharts | 实时数据大屏
-        </div>
+          {/* Footer */}
+          <div className="mt-8 text-center text-xs text-muted-foreground">
+            数据可视化平台 | Next.js 16 + Prisma 7 + Recharts | 实时数据大屏
+          </div>
+        </main>
       </div>
     </div>
   );

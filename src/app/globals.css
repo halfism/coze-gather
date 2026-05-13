@@ -1,3 +1,4 @@
+@import "https://fonts.googleapis.cn/css2?family=Inter:wght@400;500;600;700&display=swap";
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -42,51 +43,60 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-sans:
-    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', ui-sans-serif,
-    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
   --font-serif:
     'Noto Serif SC', 'Songti SC', 'SimSun', ui-serif, Georgia, Cambria,
     'Times New Roman', Times, serif;
+  /* Orion UI Kit - Extended tokens */
+  --color-primary-container: #E0E7FF;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-high: #E8EBF2;
+  --color-surface-container-highest: #DEE2EC;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --radius-full: 9999px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-float: 0 10px 25px rgba(0,0,0,0.08);
+  --shadow-dialog: 0 25px 50px rgba(0,0,0,0.12);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.5rem;
+  /* Orion UI Kit - Light Theme */
+  --background: #F8F9FC;
+  --foreground: #1E1F25;
+  --card: #FFFFFF;
+  --card-foreground: #1E1F25;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E1F25;
+  --primary: #4F46E5;
+  --primary-foreground: #ffffff;
+  --secondary: #F1F3F9;
+  --secondary-foreground: #1E1F25;
+  --muted: #F1F3F9;
+  --muted-foreground: #6B7084;
+  --accent: #E0E7FF;
+  --accent-foreground: #4F46E5;
+  --destructive: #ef4444;
+  --border: #E2E5EF;
+  --input: #F1F3F9;
+  --ring: #4F46E5;
+  --chart-1: #4F46E5;
+  --chart-2: #3b82f6;
+  --chart-3: #f97316;
+  --chart-4: #10b981;
+  --chart-5: #f43f5e;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1E1F25;
+  --sidebar-primary: #4F46E5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #F1F3F9;
+  --sidebar-accent-foreground: #1E1F25;
+  --sidebar-border: #E2E5EF;
+  --sidebar-ring: #4F46E5;
 }
 
 .dark {

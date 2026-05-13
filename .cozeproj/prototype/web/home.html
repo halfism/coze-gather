@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/google-all-fonts.css" rel="stylesheet"/>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary:              #4F46E5;
+      --color-primary-container:    #E0E7FF;
+      --color-on-primary:           #ffffff;
+      --color-background:                 #F8F9FC;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #F1F3F9;
+      --color-surface-container-high:     #E8EBF2;
+      --color-surface-container-highest:  #DEE2EC;
+      --color-on-surface:           #1E1F25;
+      --color-on-surface-variant:   #6B7084;
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      --color-outline:          #D1D5E4;
+      --color-outline-variant:  #E2E5EF;
+      --radius-sm:   0.375rem;
+      --radius-md:   0.5rem;
+      --radius-lg:   0.75rem;
+      --radius-xl:   1rem;
+      --radius-2xl:  1.5rem;
+      --radius-full: 9999px;
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.12);
+      --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-5 border-b border-outline-variant/30">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="chart-bar" class="w-4.5 h-4.5 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base tracking-tight">DataViz Platform</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors">
+        <i data-lucide="bell" class="w-4 h-4 text-on-surface-variant"></i>
+      </button>
+      <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">初</div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline-variant/30 overflow-y-auto">
+      <div class="p-3 space-y-0.5">
+        <a href="home.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-primary/8 text-primary transition-colors" aria-current="page">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>概览
+        </a>
+        <a href="data.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors">
+          <i data-lucide="database" class="w-4 h-4"></i>数据录入
+        </a>
+        <a href="dashboard.html" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors">
+          <i data-lucide="monitor" class="w-4 h-4"></i>可视化大屏
+        </a>
+      </div>
+      <div class="mt-6 mx-3 pt-4 border-t border-outline-variant/20">
+        <p class="px-3 text-xs font-medium text-on-surface-variant/60 uppercase tracking-wider mb-2">系统</p>
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors">
+          <i data-lucide="settings" class="w-4 h-4"></i>设置
+        </a>
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors">
+          <i data-lucide="help-circle" class="w-4 h-4"></i>帮助
+        </a>
+      </div>
+    </aside>
+
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+      <!-- 欢迎区 -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-on-surface">欢迎回来，小初</h1>
+        <p class="text-sm text-on-surface-variant mt-1">以下是你的数据平台概览</p>
+      </div>
+
+      <!-- 统计卡片 -->
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wide">总记录数</span>
+            <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <i data-lucide="hash" class="w-4 h-4 text-primary"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-on-surface">12</div>
+          <div class="text-xs text-success font-medium mt-1">+3 本月新增</div>
+        </div>
+        <div class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wide">数值总和</span>
+            <div class="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
+              <i data-lucide="trending-up" class="w-4 h-4 text-success"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-on-surface">173,464</div>
+          <div class="text-xs text-success font-medium mt-1">+12.5% 较上月</div>
+        </div>
+        <div class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wide">平均值</span>
+            <div class="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
+              <i data-lucide="divide" class="w-4 h-4 text-warning"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-on-surface">14,455</div>
+          <div class="text-xs text-on-surface-variant mt-1">跨所有分类</div>
+        </div>
+        <div class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-medium text-on-surface-variant uppercase tracking-wide">分类数</span>
+            <div class="w-8 h-8 rounded-lg bg-error/10 flex items-center justify-center">
+              <i data-lucide="layers" class="w-4 h-4 text-error"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-on-surface">5</div>
+          <div class="text-xs text-on-surface-variant mt-1">销售/用户/运营/流量/收入</div>
+        </div>
+      </div>
+
+      <!-- 分类分布 + 最近记录 -->
+      <div class="grid grid-cols-3 gap-6">
+        <!-- 分类分布 -->
+        <div class="bg-surface rounded-lg shadow-card p-5">
+          <h2 class="text-base font-semibold text-on-surface mb-4">分类分布</h2>
+          <div class="space-y-3">
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="font-medium text-on-surface">流量</span>
+                <span class="text-on-surface-variant">131,580</span>
+              </div>
+              <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div class="h-full bg-blue-500 rounded-full" style="width:75%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="font-medium text-on-surface">销售</span>
+                <span class="text-on-surface-variant">21,172</span>
+              </div>
+              <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width:12%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="font-medium text-on-surface">收入</span>
+                <span class="text-on-surface-variant">14,590</span>
+              </div>
+              <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div class="h-full bg-orange-500 rounded-full" style="width:8%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="font-medium text-on-surface">用户</span>
+                <span class="text-on-surface-variant">5,998</span>
+              </div>
+              <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-500 rounded-full" style="width:4%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="font-medium text-on-surface">运营</span>
+                <span class="text-on-surface-variant">123.5</span>
+              </div>
+              <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                <div class="h-full bg-rose-400 rounded-full" style="width:1%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 最近记录 -->
+        <div class="col-span-2 bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-semibold text-on-surface">最近记录</h2>
+            <a href="data.html" class="text-sm font-medium text-primary hover:underline">查看全部</a>
+          </div>
+          <div class="divide-y divide-outline-variant/40">
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                <div>
+                  <span class="text-sm font-medium text-on-surface">页面访问量</span>
+                  <span class="text-xs text-on-surface-variant ml-2">流量</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-semibold text-on-surface">89,430</div>
+                <div class="text-xs text-on-surface-variant">2026-05-12</div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-sky-500"></div>
+                <div>
+                  <span class="text-sm font-medium text-on-surface">独立访客</span>
+                  <span class="text-xs text-on-surface-variant ml-2">流量</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-semibold text-on-surface">42,150</div>
+                <div class="text-xs text-on-surface-variant">2026-05-12</div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-primary"></div>
+                <div>
+                  <span class="text-sm font-medium text-on-surface">线上销售额</span>
+                  <span class="text-xs text-on-surface-variant ml-2">销售</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-semibold text-on-surface">12,580</div>
+                <div class="text-xs text-on-surface-variant">2026-05-12</div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div>
+                  <span class="text-sm font-medium text-on-surface">会员收入</span>
+                  <span class="text-xs text-on-surface-variant ml-2">收入</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-semibold text-on-surface">8,920</div>
+                <div class="text-xs text-on-surface-variant">2026-05-12</div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <div>
+                  <span class="text-sm font-medium text-on-surface">新增用户</span>
+                  <span class="text-xs text-on-surface-variant ml-2">用户</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-semibold text-on-surface">3,580</div>
+                <div class="text-xs text-on-surface-variant">2026-05-12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 快速入口 -->
+      <div class="mt-8 grid grid-cols-2 gap-4">
+        <a href="data.html" class="group bg-surface rounded-lg shadow-card p-5 hover:shadow-float transition-shadow border border-outline-variant/0 hover:border-primary/20">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+              <i data-lucide="plus-circle" class="w-5 h-5 text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-on-surface">数据录入</h3>
+              <p class="text-xs text-on-surface-variant mt-0.5">添加、编辑、删除数据记录</p>
+            </div>
+          </div>
+        </a>
+        <a href="dashboard.html" class="group bg-surface rounded-lg shadow-card p-5 hover:shadow-float transition-shadow border border-outline-variant/0 hover:border-primary/20">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+              <i data-lucide="area-chart" class="w-5 h-5 text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-on-surface">可视化大屏</h3>
+              <p class="text-xs text-on-surface-variant mt-0.5">查看数据图表与趋势分析</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
