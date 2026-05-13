@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { AppLayout } from "@/components/app-layout";
 
 interface DataRecord {
@@ -40,29 +41,32 @@ interface DataRecord {
   updatedAt: string;
 }
 
-/* Blue-only palette: different opacities for category distinction */
-const CATEGORY_OPACITIES: Record<string, number> = {
-  "销售": 1.0,
-  "用户": 0.85,
-  "运营": 0.7,
-  "流量": 0.55,
-  "收入": 0.4,
-  "测试": 0.25,
-  "默认": 0.15,
+const CATEGORY_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
+  "销售": { bg: "bg-indigo-50/80", text: "text-indigo-600", dot: "bg-indigo-400" },
+  "用户": { bg: "bg-violet-50/80", text: "text-violet-600", dot: "bg-violet-400" },
+  "运营": { bg: "bg-emerald-50/80", text: "text-emerald-600", dot: "bg-emerald-400" },
+  "流量": { bg: "bg-sky-50/80", text: "text-sky-600", dot: "bg-sky-400" },
+  "收入": { bg: "bg-amber-50/80", text: "text-amber-600", dot: "bg-amber-400" },
+  "测试": { bg: "bg-rose-50/80", text: "text-rose-600", dot: "bg-rose-400" },
+  "默认": { bg: "bg-slate-50/80", text: "text-slate-600", dot: "bg-slate-400" },
 };
 
 const COLOR_OPTIONS = [
-  { label: "深蓝", value: "#1d4ed8" },
-  { label: "蓝色", value: "#3b82f6" },
-  { label: "亮蓝", value: "#60a5fa" },
-  { label: "浅蓝", value: "#93c5fd" },
-  { label: "淡蓝", value: "#bfdbfe" },
-  { label: "天蓝", value: "#0ea5e9" },
   { label: "靛蓝", value: "#6366f1" },
-  { label: "青蓝", value: "#06b6d4" },
+  { label: "紫色", value: "#8b5cf6" },
+  { label: "紫红", value: "#a855f7" },
+  { label: "青色", value: "#06b6d4" },
+  { label: "绿色", value: "#10b981" },
+  { label: "琥珀", value: "#f59e0b" },
+  { label: "红色", value: "#ef4444" },
+  { label: "翠绿", value: "#22c55e" },
+  { label: "蓝色", value: "#3b82f6" },
+  { label: "天蓝", value: "#0ea5e9" },
+  { label: "粉色", value: "#ec4899" },
+  { label: "橙色", value: "#f97316" },
 ];
 
-const emptyForm = { title: "", value: "", description: "", category: "默认", color: "#3b82f6" };
+const emptyForm = { title: "", value: "", description: "", category: "默认", color: "#6366f1" };
 
 export default function DataPage() {
   const [records, setRecords] = useState<DataRecord[]>([]);
@@ -169,7 +173,7 @@ export default function DataPage() {
             <DialogTrigger asChild>
               <Button
                 onClick={openCreate}
-                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200 rounded-xl"
+                className="bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200 rounded-xl"
               >
                 <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -188,7 +192,7 @@ export default function DataPage() {
                     value={form.title}
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
                     placeholder="输入数据标题"
-                    className="rounded-xl border-slate-200 bg-white focus:bg-white"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
                   />
                 </div>
                 <div className="space-y-2">
@@ -199,7 +203,7 @@ export default function DataPage() {
                     value={form.value}
                     onChange={(e) => setForm({ ...form, value: e.target.value })}
                     placeholder="输入数值"
-                    className="rounded-xl border-slate-200 bg-white focus:bg-white"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
                   />
                 </div>
                 <div className="space-y-2">
@@ -208,14 +212,14 @@ export default function DataPage() {
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                     placeholder="输入数据描述"
-                    className="rounded-xl border-slate-200 bg-white focus:bg-white"
+                    className="rounded-xl border-white/30 bg-white/40 focus:bg-white/60"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">分类</Label>
                     <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
-                      <SelectTrigger className="rounded-xl border-slate-200 bg-white"><SelectValue /></SelectTrigger>
+                      <SelectTrigger className="rounded-xl border-white/30 bg-white/40"><SelectValue /></SelectTrigger>
                       <SelectContent>
                         {["销售", "用户", "运营", "流量", "收入", "默认"].map((c) => (
                           <SelectItem key={c} value={c}>{c}</SelectItem>
@@ -226,7 +230,7 @@ export default function DataPage() {
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">颜色</Label>
                     <Select value={form.color} onValueChange={(v) => setForm({ ...form, color: v })}>
-                      <SelectTrigger className="rounded-xl border-slate-200 bg-white"><SelectValue /></SelectTrigger>
+                      <SelectTrigger className="rounded-xl border-white/30 bg-white/40"><SelectValue /></SelectTrigger>
                       <SelectContent>
                         {COLOR_OPTIONS.map((c) => (
                           <SelectItem key={c.value} value={c.value}>
@@ -242,7 +246,7 @@ export default function DataPage() {
                 </div>
                 <Button
                   onClick={handleSubmit}
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-glow hover:shadow-lg transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white rounded-xl shadow-glow hover:shadow-lg transition-all duration-200"
                 >
                   {editId ? "保存修改" : "创建记录"}
                 </Button>
@@ -254,10 +258,10 @@ export default function DataPage() {
         {/* Stats Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "总记录数", value: String(records.length), iconPath: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" },
-            { label: "分类数", value: String(new Set(records.map((r) => r.category)).size), iconPath: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" },
-            { label: "数值总和", value: records.reduce((sum, r) => sum + r.value, 0).toLocaleString(), iconPath: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-            { label: "平均值", value: records.length > 0 ? (records.reduce((sum, r) => sum + r.value, 0) / records.length).toFixed(1) : "0", iconPath: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
+            { label: "总记录数", value: String(records.length), icon: "📋", gradient: "from-indigo-400/15 to-indigo-500/10" },
+            { label: "分类数", value: String(new Set(records.map((r) => r.category)).size), icon: "🏷️", gradient: "from-violet-400/15 to-purple-500/10" },
+            { label: "数值总和", value: records.reduce((sum, r) => sum + r.value, 0).toLocaleString(), icon: "📊", gradient: "from-cyan-400/15 to-blue-500/10" },
+            { label: "平均值", value: records.length > 0 ? (records.reduce((sum, r) => sum + r.value, 0) / records.length).toFixed(1) : "0", icon: "📈", gradient: "from-emerald-400/15 to-teal-500/10" },
           ].map((stat) => (
             <div key={stat.label} className="glass-strong rounded-2xl p-5 hover:shadow-float transition-all duration-300">
               <div className="flex items-center justify-between">
@@ -265,32 +269,36 @@ export default function DataPage() {
                   <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</p>
                   <p className="text-2xl font-bold mt-1.5 tracking-tight">{stat.value}</p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d={stat.iconPath} />
-                  </svg>
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-lg`}>
+                  {stat.icon}
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Filter - Blue gradient active state */}
+        {/* Filter */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground font-medium mr-1">筛选:</span>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilterCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
-                filterCategory === cat
-                  ? "bg-gradient-to-r from-blue-500 to-blue-400 text-white shadow-glow"
-                  : "glass-subtle text-muted-foreground hover:bg-white/50 hover:text-foreground"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const style = cat !== "全部" ? CATEGORY_STYLES[cat] : null;
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilterCategory(cat)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  filterCategory === cat
+                    ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-glow"
+                    : "glass-subtle text-muted-foreground hover:bg-white/50 hover:text-foreground"
+                }`}
+              >
+                <span className="flex items-center gap-1.5">
+                  {style && <span className={`w-2 h-2 rounded-full ${style.dot}`} />}
+                  {cat}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Data Table */}
@@ -300,8 +308,8 @@ export default function DataPage() {
           </div>
         ) : filteredRecords.length === 0 ? (
           <div className="glass-strong rounded-2xl p-20 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
             </div>
@@ -323,26 +331,20 @@ export default function DataPage() {
               </TableHeader>
               <TableBody>
                 {filteredRecords.map((record) => {
-                  const opacity = CATEGORY_OPACITIES[record.category] ?? 0.15;
+                  const style = CATEGORY_STYLES[record.category] || CATEGORY_STYLES["默认"];
                   return (
-                    <TableRow key={record.id} className="border-border/20 hover:bg-blue-50/30 transition-colors">
+                    <TableRow key={record.id} className="border-border/20 hover:bg-white/30 transition-colors">
                       <TableCell className="font-medium text-foreground">{record.title}</TableCell>
-                      <TableCell className="font-mono font-semibold text-blue-600">{record.value.toLocaleString()}</TableCell>
+                      <TableCell className="font-mono font-semibold text-indigo-600">{record.value.toLocaleString()}</TableCell>
                       <TableCell className="text-muted-foreground max-w-[200px] truncate">{record.description}</TableCell>
                       <TableCell>
-                        <span
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-blue-700"
-                          style={{ backgroundColor: `rgba(59,130,246,${0.06 + opacity * 0.1})` }}
-                        >
-                          <span
-                            className="w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: `rgba(59,130,246,${0.3 + opacity * 0.7})` }}
-                          />
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium ${style.bg} ${style.text}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
                           {record.category}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="inline-block w-5 h-5 rounded-lg border border-slate-100 shadow-sm" style={{ backgroundColor: record.color }} />
+                        <span className="inline-block w-5 h-5 rounded-lg border border-white/50 shadow-sm" style={{ backgroundColor: record.color }} />
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end gap-1">
@@ -350,7 +352,7 @@ export default function DataPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEdit(record)}
-                            className="text-muted-foreground hover:text-blue-600 hover:bg-blue-50/50 rounded-lg"
+                            className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-50/50 rounded-lg"
                           >
                             编辑
                           </Button>
@@ -358,7 +360,7 @@ export default function DataPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(record.id)}
-                            className="text-muted-foreground hover:text-red-500 hover:bg-red-50/50 rounded-lg"
+                            className="text-muted-foreground hover:text-red-600 hover:bg-red-50/50 rounded-lg"
                           >
                             删除
                           </Button>

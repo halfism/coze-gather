@@ -48,13 +48,13 @@ export function AppLayout({ children, pageTitle }: AppLayoutProps) {
         {/* Logo */}
         <div className="p-5 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-glow">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-glow">
               <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
             <div>
-              <span className="font-bold text-[15px] tracking-tight text-foreground">
+              <span className="font-bold text-[15px] tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
                 DataViz
               </span>
               <p className="text-[10px] text-muted-foreground mt-0.5">数据可视化平台</p>
@@ -75,15 +75,15 @@ export function AppLayout({ children, pageTitle }: AppLayoutProps) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
                   isActive
-                    ? "bg-blue-50 text-blue-600 shadow-sm border border-blue-100"
+                    ? "bg-gradient-to-r from-indigo-500/10 to-violet-500/10 text-indigo-600 shadow-sm border border-indigo-200/50"
                     : "text-muted-foreground hover:bg-white/40 hover:text-foreground border border-transparent"
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <span className={isActive ? "text-blue-500" : ""}>{item.icon}</span>
+                <span className={isActive ? "text-indigo-500" : ""}>{item.icon}</span>
                 {item.label}
                 {isActive && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-500" />
                 )}
               </Link>
             );
@@ -94,7 +94,7 @@ export function AppLayout({ children, pageTitle }: AppLayoutProps) {
         <div className="p-4 mt-auto">
           <div className="glass-subtle rounded-xl px-3 py-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
                 V
               </div>
               <div className="flex-1 min-w-0">
@@ -135,7 +135,7 @@ export function AppLayout({ children, pageTitle }: AppLayoutProps) {
             </button>
             <div className="w-px h-5 bg-border/50 mx-1" />
             <div className="flex items-center gap-2.5 pl-1">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center text-white text-xs font-bold shadow-sm ring-2 ring-white/50">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white text-xs font-bold shadow-sm ring-2 ring-white/50">
                 初
               </div>
             </div>

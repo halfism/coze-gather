@@ -13,12 +13,14 @@ export default function HomePage() {
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* Hero Banner */}
         <div className="glass-strong rounded-2xl p-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.03] to-blue-300/[0.03]" />
-          <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-blue-400/10 to-blue-200/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-br from-blue-300/8 to-blue-100/8 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-violet-500/5 to-cyan-500/5" />
+          <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-indigo-400/10 to-violet-400/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-gradient-to-br from-cyan-400/8 to-blue-400/8 rounded-full blur-3xl" />
           <div className="relative z-10">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">
-              数据可视化平台
+            <h1 className="text-2xl font-bold tracking-tight">
+              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                数据可视化平台
+              </span>
             </h1>
             <p className="text-muted-foreground mt-2 text-sm max-w-xl">
               集数据录入、实时统计与多维度可视化于一体，为企业决策提供数据驱动的洞察支持。
@@ -26,7 +28,7 @@ export default function HomePage() {
             <div className="flex gap-3 mt-5">
               <Link
                 href="/data"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-medium shadow-glow hover:shadow-lg hover:scale-[1.02] transition-all duration-200"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -46,7 +48,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Stats Cards - Same blue gradient, different lightness */}
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             {
@@ -54,8 +56,10 @@ export default function HomePage() {
               value: "13",
               unit: "条",
               change: "+3 本周",
+              gradient: "from-indigo-500 to-indigo-600",
+              iconBg: "from-indigo-400/20 to-indigo-500/20",
               icon: (
-                <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
                 </svg>
               ),
@@ -65,8 +69,10 @@ export default function HomePage() {
               value: "17.4万",
               unit: "",
               change: "+12.5%",
+              gradient: "from-violet-500 to-purple-600",
+              iconBg: "from-violet-400/20 to-purple-500/20",
               icon: (
-                <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               ),
@@ -76,8 +82,10 @@ export default function HomePage() {
               value: "6",
               unit: "个",
               change: "收入/流量/用户",
+              gradient: "from-cyan-500 to-blue-600",
+              iconBg: "from-cyan-400/20 to-blue-500/20",
               icon: (
-                <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <svg className="w-5 h-5 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                 </svg>
               ),
@@ -87,8 +95,10 @@ export default function HomePage() {
               value: "1.34万",
               unit: "",
               change: "范围 3.2-89430",
+              gradient: "from-emerald-500 to-teal-600",
+              iconBg: "from-emerald-400/20 to-teal-500/20",
               icon: (
-                <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               ),
@@ -106,7 +116,7 @@ export default function HomePage() {
                     {stat.unit && <span className="text-sm text-muted-foreground">{stat.unit}</span>}
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}>
                   {stat.icon}
                 </div>
               </div>
@@ -115,26 +125,25 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Category Distribution & Quick Access */}
+        {/* Category Distribution */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Category Distribution - Blue gradient only */}
           <div className="glass-strong rounded-2xl p-6">
             <h3 className="text-sm font-semibold mb-5">分类分布</h3>
             <div className="space-y-4">
               {[
-                { name: "流量", count: 2, pct: 100 },
-                { name: "收入", count: 2, pct: 100 },
-                { name: "销售", count: 3, pct: 75 },
-                { name: "用户", count: 2, pct: 50 },
-                { name: "运营", count: 3, pct: 37 },
-                { name: "测试", count: 1, pct: 12 },
+                { name: "流量", count: 2, pct: 100, color: "from-cyan-400 to-blue-500" },
+                { name: "收入", count: 2, pct: 100, color: "from-violet-400 to-purple-500" },
+                { name: "销售", count: 3, pct: 75, color: "from-indigo-400 to-indigo-600" },
+                { name: "用户", count: 2, pct: 50, color: "from-emerald-400 to-teal-500" },
+                { name: "运营", count: 3, pct: 37, color: "from-amber-400 to-orange-500" },
+                { name: "测试", count: 1, pct: 12, color: "from-rose-400 to-pink-500" },
               ].map((cat) => (
                 <div key={cat.name} className="flex items-center gap-3">
                   <span className="text-xs font-medium text-muted-foreground w-8">{cat.name}</span>
-                  <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="flex-1 h-2.5 bg-white/40 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-blue-500 to-blue-300 rounded-full transition-all duration-700"
-                      style={{ width: `${cat.pct}%`, opacity: 0.4 + (cat.pct / 100) * 0.6 }}
+                      className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-700`}
+                      style={{ width: `${cat.pct}%` }}
                     />
                   </div>
                   <span className="text-xs font-semibold text-foreground w-6 text-right">{cat.count}</span>
@@ -143,7 +152,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Quick Access - Blue only */}
+          {/* Quick Access */}
           <div className="glass-strong rounded-2xl p-6">
             <h3 className="text-sm font-semibold mb-5">快捷入口</h3>
             <div className="grid grid-cols-2 gap-3">
@@ -152,8 +161,9 @@ export default function HomePage() {
                   href: "/data",
                   label: "数据录入",
                   desc: "新增与管理数据",
+                  gradient: "from-indigo-500/10 to-violet-500/10",
                   icon: (
-                    <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-6 h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                   ),
@@ -162,8 +172,9 @@ export default function HomePage() {
                   href: "/dashboard",
                   label: "可视化大屏",
                   desc: "图表与数据分析",
+                  gradient: "from-cyan-500/10 to-blue-500/10",
                   icon: (
-                    <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-6 h-6 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   ),
@@ -172,8 +183,9 @@ export default function HomePage() {
                   href: "/data",
                   label: "批量操作",
                   desc: "导入与导出数据",
+                  gradient: "from-emerald-500/10 to-teal-500/10",
                   icon: (
-                    <svg className="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                   ),
@@ -182,8 +194,9 @@ export default function HomePage() {
                   href: "/dashboard",
                   label: "报表中心",
                   desc: "查看统计报表",
+                  gradient: "from-amber-500/10 to-orange-500/10",
                   icon: (
-                    <svg className="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   ),
@@ -192,9 +205,9 @@ export default function HomePage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="glass-subtle rounded-xl p-4 hover:bg-white/50 hover:shadow-float transition-all duration-300 group border border-transparent hover:border-blue-100/60"
+                  className={`glass-subtle rounded-xl p-4 hover:bg-white/50 hover:shadow-float transition-all duration-300 group border border-transparent hover:border-white/60`}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-200">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-200`}>
                     {item.icon}
                   </div>
                   <p className="text-sm font-medium">{item.label}</p>
