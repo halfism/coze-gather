@@ -50,57 +50,57 @@
   --font-serif:
     'Noto Serif SC', 'Songti SC', 'SimSun', ui-serif, Georgia, Cambria,
     'Times New Roman', Times, serif;
-  /* Glassmorphism Data Viz - Extended tokens */
-  --color-primary-container: #E0E7FF;
+  /* Minimal Blue Theme - Extended tokens */
+  --color-primary-container: #DBEAFE;
   --color-surface-container-lowest: #FFFFFF;
-  --color-surface-container: #F0F1F8;
-  --color-surface-container-high: #E8EBF2;
-  --color-surface-container-highest: #DEE2EC;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
+  --color-surface-container: #F0F4FA;
+  --color-surface-container-high: #E8EDF5;
+  --color-surface-container-highest: #DDE4F0;
+  --color-success: #3b82f6;
+  --color-warning: #60a5fa;
+  --color-info: #2563eb;
   --radius-full: 9999px;
-  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.06);
-  --shadow-card: 0 2px 16px rgba(79, 70, 229, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
-  --shadow-float: 0 12px 40px rgba(79, 70, 229, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-dialog: 0 25px 60px rgba(79, 70, 229, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06);
-  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 16px rgba(59, 130, 246, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
+  --shadow-float: 0 12px 40px rgba(59, 130, 246, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-dialog: 0 25px 60px rgba(59, 130, 246, 0.1), 0 8px 20px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.12);
 }
 
 :root {
   --radius: 0.75rem;
-  /* Glassmorphism Data Viz - Light Theme */
-  --background: #EEF0F7;
-  --foreground: #1A1D2E;
-  --card: rgba(255, 255, 255, 0.72);
-  --card-foreground: #1A1D2E;
-  --popover: rgba(255, 255, 255, 0.85);
-  --popover-foreground: #1A1D2E;
-  --primary: #6366F1;
+  /* Minimal Blue Theme - Light */
+  --background: #F5F7FB;
+  --foreground: #1E293B;
+  --card: rgba(255, 255, 255, 0.78);
+  --card-foreground: #1E293B;
+  --popover: rgba(255, 255, 255, 0.9);
+  --popover-foreground: #1E293B;
+  --primary: #3B82F6;
   --primary-foreground: #ffffff;
-  --secondary: #F0F1F8;
-  --secondary-foreground: #1A1D2E;
-  --muted: #F0F1F8;
-  --muted-foreground: #717596;
-  --accent: #E0E7FF;
-  --accent-foreground: #6366F1;
+  --secondary: #EFF6FF;
+  --secondary-foreground: #1E293B;
+  --muted: #F0F4FA;
+  --muted-foreground: #94A3B8;
+  --accent: #DBEAFE;
+  --accent-foreground: #2563EB;
   --destructive: #ef4444;
-  --border: rgba(226, 229, 239, 0.6);
-  --input: rgba(241, 243, 249, 0.8);
-  --ring: #6366F1;
-  --chart-1: #6366F1;
-  --chart-2: #8B5CF6;
-  --chart-3: #06B6D4;
-  --chart-4: #10B981;
-  --chart-5: #F59E0B;
-  --sidebar: rgba(255, 255, 255, 0.6);
-  --sidebar-foreground: #1A1D2E;
-  --sidebar-primary: #6366F1;
+  --border: rgba(226, 232, 240, 0.7);
+  --input: rgba(241, 245, 249, 0.9);
+  --ring: #3B82F6;
+  --chart-1: #3B82F6;
+  --chart-2: #60A5FA;
+  --chart-3: #93C5FD;
+  --chart-4: #BFDBFE;
+  --chart-5: #DBEAFE;
+  --sidebar: rgba(255, 255, 255, 0.65);
+  --sidebar-foreground: #1E293B;
+  --sidebar-primary: #3B82F6;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(99, 102, 241, 0.08);
-  --sidebar-accent-foreground: #1A1D2E;
-  --sidebar-border: rgba(226, 229, 239, 0.5);
-  --sidebar-ring: #6366F1;
+  --sidebar-accent: rgba(59, 130, 246, 0.08);
+  --sidebar-accent-foreground: #1E293B;
+  --sidebar-border: rgba(226, 232, 240, 0.5);
+  --sidebar-ring: #3B82F6;
 }
 
 .dark {
@@ -164,7 +164,7 @@ body {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.08);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.06);
 }
 
 .glass-subtle {
@@ -192,14 +192,14 @@ body {
 
 .glass-hover:hover {
   background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.1);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.08);
 }
 
-/* Gradient Background */
+/* Gradient Background - Blue Only */
 .bg-mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
-    #EEF0F7;
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(96, 165, 250, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, rgba(147, 197, 253, 0.03) 0%, transparent 50%),
+    #F5F7FB;
 }
